@@ -14,18 +14,33 @@
 
     <header id="navbar">
         <div class="container nav-wrapper">
-            <a href="#" class="logo" style="text-decoration: none;">Морская Жемчужина</a>
-            <nav>
+            <a href="index.html" class="logo">Морская Жемчужина</a>
+
+            <button
+                type="button"
+                class="nav-toggle"
+                id="nav-toggle"
+                aria-label="Открыть меню"
+                aria-expanded="false"
+                aria-controls="main-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="main-nav" class="main-nav" aria-label="Основная навигация">
                 <ul class="nav-links">
                     <li><a href="#about">О курорте</a></li>
                     <li><a href="#rooms">Номера</a></li>
                     <li><a href="#services">Услуги и SPA</a></li>
                     <li><a href="#contacts">Контакты</a></li>
                 </ul>
+                <a href="#rooms" class="btn btn-gold header-btn mobile-book-btn">Бронь</a>
             </nav>
-            <a href="#rooms" class="btn btn-gold header-btn">Бронь</a>
         </div>
     </header>
+    <div class="nav-overlay" id="nav-overlay" hidden></div>
 
     <section class="hero" id="about">
         <div class="hero-overlay"></div>
