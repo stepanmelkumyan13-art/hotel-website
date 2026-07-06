@@ -300,8 +300,16 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
 .thumb:hover { opacity: 0.9; }
 .thumb.active-thumb { opacity: 1; border: 2px solid var(--accent-color); }
 
-.room-info { padding: 20px 0; }
-.room-title { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 10px; }
+.room-info {
+     padding: 20px 0; 
+}
+
+.room-title { 
+    font-size: 2.5rem;
+     color: var(--primary-color); 
+     margin-bottom: 10px; 
+     margin-top: 100px; 
+    }
 .room-info .price-tag { font-size: 1.5rem; margin-bottom: 25px; }
 .room-description { font-size: 1.05rem; margin-bottom: 30px; color: var(--text-color); }
 
