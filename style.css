@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    1. БАЗОВЫЕ НАСТРОЙКИ И ПАЛИТРА
    ========================================================================== */
@@ -404,24 +405,6 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
     .hero h1 { font-size: 2.5rem; }
     .contact-wrapper { flex-direction: column; }
     .footer-content { flex-direction: column; gap: 20px; text-align: center; }
-    /* Pushes the text container down */
-   .room-info, 
-   .room-details {
-    margin-top: 40px !important; 
-    padding-top: 10px;
-   }
-  
-  /* Adds space below the last photo just in case */
-    .room-gallery {
-    margin-bottom: 40px !important; 
-  }
-  
-  /* Make sure the title has line-height room so it doesn't squish itself */
-    .room-info h1, 
-    .room-details h1 {
-    line-height: 1.3;
-    margin-bottom: 15px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -431,116 +414,90 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
         transition: none;
     }
 }
-/* --- LIGHTBOX STYLES --- */
+/* --- Lightbox Overlay & Blur Effect --- */
 .lightbox {
-  display: none; /* Hidden until JavaScript opens it */
+  display: none; /* Hidden by default */
   position: fixed;
   z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(50, 50, 50, 0.85); /* Grey darkened background */
-  backdrop-filter: blur(8px); /* The blur effect */
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.7); /* Dimmed dark background */
+  backdrop-filter: blur(8px); /* Creates the premium blur effect */
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
   justify-content: center;
   align-items: center;
 }
 
+/* --- Lightbox Image --- */
 .lightbox-content {
   max-width: 90%;
   max-height: 85vh;
-  object-fit: contain;
+  object-fit: contain; /* Ensures the whole image is visible */
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease-out; /* Smooth pop-in effect */
 }
 
+/* --- Navigation & Close Buttons --- */
 .close-lightbox {
   position: absolute;
   top: 20px;
   right: 30px;
   color: #fff;
-  font-size: 45px;
+  font-size: 40px;
   font-weight: bold;
   cursor: pointer;
+  transition: color 0.3s;
   z-index: 10000;
+}
+
+.close-lightbox:hover {
+  color: #ddd;
 }
 
 .prev-arrow, .next-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
   border: none;
   font-size: 2rem;
-  padding: 15px 20px;
+  padding: 12px 18px;
   cursor: pointer;
   border-radius: 5px;
+  transition: background 0.3s;
   z-index: 10000;
+  backdrop-filter: blur(4px); /* Blurs what's directly under the button */
 }
 
-.prev-arrow:hover, .next-arrow:hover { background: rgba(255, 255, 255, 0.5); }
+.prev-arrow:hover, .next-arrow:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
 .prev-arrow { left: 5%; }
 .next-arrow { right: 5%; }
 
-/* --- FULL SIZE ROOM PHOTOS --- */
-.thumbnails {
-  display: flex;
-  flex-direction: column; /* Stacks the photos vertically instead of side-by-side */
-  gap: 20px; /* Adds space between the big photos */
-  margin-top: 20px;
+/* --- Smooth Animation --- */
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.thumbnails img {
-  width: 100%; /* Forces them to be the exact same width as the main photo */
-  height: auto;
-  object-fit: cover;
-  border-radius: 8px; /* Keeps the premium rounded corners */
-  cursor: pointer;
-}
-/* ==========================================
-   FORCE FULL-SIZE PHOTOS & MOBILE OVERLAP FIX
-   ========================================== */
-
-/* 1. Force the thumbnails to stack vertically and be full width */
-.thumbnails {
-  display: flex !important;
-  flex-direction: column !important; /* Stacks vertically */
-  gap: 20px !important;
-  margin-top: 20px !important;
-}
-
-.thumbnails img {
-  width: 100% !important; /* Matches the width of the main image */
-  height: auto !important;
-  max-height: none !important; /* Removes any old height restrictions */
-  object-fit: cover !important;
-  border-radius: 8px !important;
-}
-
-/* 2. Force the text to drop down on mobile */
+/* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
-  /* Push the gallery block away from the text */
-  .room-gallery {
-    margin-bottom: 40px !important; 
-    position: relative !important;
+  .prev-arrow, .next-arrow {
+    padding: 8px 12px;
+    font-size: 1.5rem;
   }
+  .prev-arrow { left: 2%; }
+  .next-arrow { right: 2%; }
   
-  /* Kill any old margins that are pulling the text upward */
-  .room-info, 
-  .room-details {
-    margin-top: 0px !important; 
-    padding-top: 20px !important;
-    position: relative !important;
-    clear: both !important;
-    z-index: 2 !important;
-  }
-  
-  /* Give the title room to breathe */
-  .room-info h1, 
-  .room-details h1 {
-    line-height: 1.4 !important;
-    padding-top: 10px !important;
+  .close-lightbox {
+    top: 15px;
+    right: 20px;
+    font-size: 35px;
   }
 }
