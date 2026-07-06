@@ -1,554 +1,212 @@
 /* ==========================================================================
-   1. GLOBAL VARIABLES & THEME SETTINGS
+   HOTEL WEBSITE - FINAL ASSEMBLED STYLE.CSS
    ========================================================================== */
+
 :root {
-    --primary-color: #c5a880;       /* Premium Gold / Accent */
-    --primary-hover: #b0926a;       /* Darker Gold for hover states */
-    --secondary-color: #1a2632;     /* Deep Luxury Slate / Navy */
-    --bg-light: #f9f6f0;            /* Warm Vanilla White for backgrounds */
-    --text-dark: #333333;           /* Main reading text */
-    --text-light: #777777;          /* Secondary reading text */
+    --primary-color: #d4af37; /* Gold */
+    --secondary-color: #1a1a1a; /* Dark/Luxury */
     --white: #ffffff;
-    --black: #000000;
-    --border-color: #eaeaea;
+    --text-color: #333333;
     --transition-smooth: all 0.3s ease;
-    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    --box-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    color: var(--text-color); 
+    line-height: 1.6; 
 }
 
 /* ==========================================================================
-   2. RESET & BASE TYPOGRAPHY
+   1. GLOBAL FIXES (IMAGES & ICONS)
    ========================================================================== */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* THE FIX: Prevents large images from exploding past their containers */
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
-html {
-    scroll-behavior: smooth; /* Smooth anchor scrolling */
-}
-
-body {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text-dark);
-    background-color: var(--white);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* Typography styles for headings */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
-}
-
-p {
-    margin-bottom: 1rem;
-}
-
-/* Prevent layout scrolling when interactive layers (menus/galleries) are active */
-body.no-scroll, body.lightbox-open {
-    overflow: hidden !important;
-}
-
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* ==========================================================================
-   3. HEADER & DESKTOP NAVIGATION
-   ========================================================================== */
-header {
-    background-color: var(--secondary-color);
-    padding: 1.5rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    transition: background-color 0.4s ease, padding 0.4s ease;
-}
-
-header.header-scrolled {
-    padding: 0.8rem 0;
-    background-color: rgba(26, 38, 50, 0.95);
-}
-
-.nav-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    color: var(--white);
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none;
-}
-
-.logo span {
+/* THE FIX: Forces all icons to use the gold primary color */
+i, .fas, .fab, .icon, svg {
     color: var(--primary-color);
 }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2.5rem;
-    align-items: center;
+.container { 
+    width: 90%; 
+    max-width: 1100px; 
+    margin: 0 auto; 
 }
 
-.nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: var(--transition-smooth);
-    position: relative;
+/* ==========================================================================
+   2. NAVIGATION & HEADER
+   ========================================================================== */
+header { 
+    background-color: var(--secondary-color); 
+    color: var(--white); 
+    padding: 1rem 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
 }
 
-/* Hover underline effect */
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    transition: var(--transition-smooth);
+.nav-wrapper { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.logo { 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.nav-links { 
+    list-style: none; 
+    display: flex; 
+    gap: 1.5rem; 
+}
+
+.nav-links a { 
+    color: var(--white); 
+    text-decoration: none; 
+    font-weight: 500; 
+    transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
     color: var(--primary-color);
 }
 
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-/* ==========================================================================
-   4. MOBILE NAVIGATION (HAMBURGER & OVERLAY) - FIXED BUG
-   ========================================================================== */
+/* Burger Menu (Hidden on Desktop) */
 .burger-menu {
     display: none;
     cursor: pointer;
-    background: none;
-    border: none;
     z-index: 102;
-    padding: 5px;
 }
 
 .burger-bar {
-    display: block;
-    width: 30px;
+    width: 25px;
     height: 3px;
-    margin: 6px auto;
     background-color: var(--white);
-    transition: var(--transition-smooth);
-}
-
-/* THE FIX: Overlay safely hidden until triggered */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 90;
-    
-    /* These prevent the layer from blocking your website */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none; 
-    
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.overlay.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto; /* Catch clicks only when menu is open */
+    margin: 5px 0;
+    transition: all 0.3s ease;
 }
 
 /* ==========================================================================
-   5. HERO SECTION
+   3. INNER ROOM PAGE SPECIFICS
    ========================================================================== */
-.hero {
-    height: 90vh;
-    min-height: 600px;
-    background: linear-gradient(rgba(26, 38, 50, 0.6), rgba(26, 38, 50, 0.4)), url('hero-bg.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    position: relative;
+.room-inner-header { 
+    background-color: var(--secondary-color); 
+    color: var(--white); 
+    padding: 4rem 0; 
+    text-align: center; 
 }
 
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    color: var(--white);
-    padding: 0 20px;
+.room-inner-header h1 { 
+    color: var(--white); 
+    font-size: 3rem; 
+    margin-bottom: 0.5rem; 
 }
 
-.hero h1 {
-    font-size: 4.5rem;
-    color: var(--white);
-    margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+.room-inner-content { 
+    padding: 5rem 0; 
 }
 
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+.room-gallery-grid { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr; 
+    grid-template-rows: 250px 250px; 
+    gap: 15px; 
+    margin-bottom: 3rem; 
 }
 
-/* Primary Button Style */
-.btn-primary {
-    display: inline-block;
-    padding: 15px 35px;
-    background-color: var(--primary-color);
-    color: var(--white);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: none;
-    cursor: pointer;
-    transition: var(--transition-smooth);
+.gallery-main { 
+    grid-row: 1 / -1; 
+    height: 100%; 
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(197, 168, 128, 0.3);
+.gallery-sub { 
+    height: 100%; 
 }
 
-/* ==========================================================================
-   6. ABOUT US SECTION
-   ========================================================================== */
-.about-section {
-    padding: 6rem 0;
-    background-color: var(--white);
+.room-gallery-grid img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    border-radius: 5px; 
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.about-text h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.about-text p {
-    color: var(--text-light);
-    font-size: 1.1rem;
-    line-height: 1.8;
-}
-
-.about-image img {
-    width: 100%;
-    border-radius: 5px;
-    box-shadow: var(--box-shadow);
-}
-
-/* ==========================================================================
-   7. SERVICES / AMENITIES GRID
-   ========================================================================== */
-.services-section {
-    padding: 6rem 0;
-    background-color: var(--bg-light);
-    text-align: center;
-}
-
-.services-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.room-description-split { 
+    display: grid; 
     gap: 2rem;
 }
 
-.service-card {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 5px;
-    box-shadow: var(--box-shadow);
-    transition: var(--transition-smooth);
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--box-shadow-hover);
-}
-
-.service-card i {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-}
-
-.service-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-}
-
-.service-card p {
-    color: var(--text-light);
-    font-size: 0.95rem;
-}
-
 /* ==========================================================================
-   8. ROOM CATALOG (HOME PAGE CARDS)
+   4. INTERACTIVE LIGHTBOX GALLERY
    ========================================================================== */
-.rooms-section {
-    padding: 6rem 0;
-    background-color: var(--white);
+.gallery-clickable { 
+    cursor: pointer; 
+    transition: opacity 0.2s ease; 
 }
 
-.section-title {
-    text-align: center;
-    font-size: 2.8rem;
-    margin-bottom: 4rem;
-}
-
-.rooms-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3rem;
-}
-
-.room-card {
-    background-color: var(--white);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    transition: var(--transition-smooth);
-}
-
-.room-card:hover {
-    box-shadow: var(--box-shadow-hover);
-    transform: translateY(-5px);
-}
-
-.room-img-wrapper {
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-}
-
-.room-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.room-card:hover .room-img-wrapper img {
-    transform: scale(1.05);
-}
-
-.room-details {
-    padding: 2rem;
-}
-
-.room-details h3 {
-    font-size: 1.6rem;
-    margin-bottom: 0.5rem;
-}
-
-.room-price {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.room-features {
-    list-style: none;
-    margin-bottom: 1.5rem;
-    color: var(--text-light);
-    font-size: 0.95rem;
-}
-
-.room-features li {
-    margin-bottom: 0.5rem;
-}
-
-.room-features i {
-    color: var(--primary-color);
-    margin-right: 10px;
-}
-
-/* ==========================================================================
-   9. INNER ROOM PAGES (DETAILED VIEWS)
-   ========================================================================== */
-.room-inner-header {
-    background-color: var(--secondary-color);
-    color: var(--white);
-    padding: 4rem 0;
-    text-align: center;
-}
-
-.room-inner-header h1 {
-    color: var(--white);
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-}
-
-.room-inner-content {
-    padding: 5rem 0;
-}
-
-.room-gallery-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 250px 250px;
-    gap: 15px;
-    margin-bottom: 3rem;
-}
-
-.gallery-main {
-    grid-row: 1 / -1;
-    height: 100%;
-}
-
-.gallery-sub {
-    height: 100%;
-}
-
-.room-gallery-grid img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.room-description-split {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 4rem;
-}
-
-.room-specs h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.room-specs p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--text-light);
-    margin-bottom: 2rem;
-}
-
-.booking-sidebar {
-    background-color: var(--bg-light);
-    padding: 2.5rem;
-    border-radius: 5px;
-    border: 1px solid var(--border-color);
-    position: sticky;
-    top: 100px;
-}
-
-.booking-sidebar h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-.price-tag {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    font-weight: bold;
-    margin-bottom: 2rem;
-    display: block;
-}
-
-/* ==========================================================================
-   10. INTERACTIVE LIGHTBOX GALLERY - FIXED BUG
-   ========================================================================== */
-/* Triggers for clicking thumbnails */
-.gallery-clickable {
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.gallery-clickable:hover {
-    opacity: 0.85;
+.gallery-clickable:hover { 
+    opacity: 0.85; 
 }
 
 #lightbox-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
     height: 100%;
     background-color: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
+    z-index: 1000; 
+    display: flex; 
+    justify-content: center; 
     align-items: center;
-    
-    /* THE FIX: Safe defaults to prevent blocking clicks */
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0; 
+    visibility: hidden; 
     pointer-events: none;
-    
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-#lightbox-modal.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto; /* Only intercepts clicks when open */
+#lightbox-modal.active { 
+    opacity: 1; 
+    visibility: visible; 
+    pointer-events: auto; 
 }
 
 #lightbox-image {
-    max-width: 85%;
-    max-height: 85vh;
+    max-width: 85%; 
+    max-height: 85vh; 
     border-radius: 8px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6); 
     user-select: none;
 }
 
 .lightbox-close, .lightbox-prev, .lightbox-next {
-    position: absolute;
-    color: var(--white);
-    font-size: 3rem;
+    position: absolute; 
+    color: var(--white); 
+    font-size: 3rem; 
     cursor: pointer;
-    background: none;
-    border: none;
-    padding: 15px;
+    background: none; 
+    border: none; 
+    padding: 15px; 
     transition: color 0.2s;
-    z-index: 1001;
+    z-index: 1001; 
     outline: none;
 }
 
-.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
-    color: var(--primary-color);
+.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover { 
+    color: var(--primary-color); 
 }
 
 .lightbox-close { top: 20px; right: 40px; font-size: 4rem; }
@@ -556,137 +214,107 @@ header.header-scrolled {
 .lightbox-next { right: 40px; }
 
 /* ==========================================================================
-   11. FOOTER & CONTACTS
+   5. FOOTER & CONTACTS
    ========================================================================== */
-footer {
-    background-color: var(--secondary-color);
-    color: var(--white);
-    padding: 5rem 0 2rem;
+footer { 
+    background-color: var(--secondary-color); 
+    color: var(--white); 
+    padding: 5rem 0 2rem; 
 }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-    margin-bottom: 3rem;
+.footer-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 3rem; 
+    margin-bottom: 3rem; 
 }
 
-.footer-col h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--white);
-    margin-bottom: 1.5rem;
+.footer-col h3 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.5rem; 
+    color: var(--white); 
+    margin-bottom: 1.5rem; 
 }
 
-.footer-col p {
-    color: #aaaaaa;
-    line-height: 1.8;
+.footer-col p { 
+    color: #aaaaaa; 
+    line-height: 1.8; 
 }
 
-.footer-links {
-    list-style: none;
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.8rem; }
+.footer-links a { color: #aaaaaa; text-decoration: none; transition: color 0.3s ease; }
+.footer-links a:hover { color: var(--primary-color); }
+
+.footer-socials { display: flex; gap: 15px; margin-top: 1rem; }
+.footer-socials a { 
+    color: var(--white); 
+    background-color: rgba(255, 255, 255, 0.1); 
+    width: 40px; 
+    height: 40px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 50%; 
+    transition: var(--transition-smooth); 
+}
+.footer-socials a:hover { background-color: var(--primary-color); }
+
+.footer-bottom { 
+    text-align: center; 
+    padding-top: 2rem; 
+    border-top: 1px solid rgba(255,255,255,0.1); 
+    color: #aaaaaa; 
+    font-size: 0.9rem; 
 }
 
-.footer-links li {
-    margin-bottom: 0.8rem;
+.btn-whatsapp { 
+    background-color: #25D366; 
+    color: white; 
+    width: 100%; 
+    text-align: center; 
+    display: block; 
+    margin-top: 1rem; 
+    padding: 10px; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-weight: bold;
 }
-
-.footer-links a {
-    color: #aaaaaa;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-    color: var(--primary-color);
-}
-
-.footer-socials {
-    display: flex;
-    gap: 15px;
-    margin-top: 1rem;
-}
-
-.footer-socials a {
-    color: var(--white);
-    background-color: rgba(255, 255, 255, 0.1);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    transition: var(--transition-smooth);
-}
-
-.footer-socials a:hover {
-    background-color: var(--primary-color);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    color: #aaaaaa;
-    font-size: 0.9rem;
-}
-
-/* WhatsApp specific button styling */
-.btn-whatsapp {
-    background-color: #25D366;
-    color: white;
-    width: 100%;
-    text-align: center;
-    display: block;
-    margin-top: 1rem;
-}
-.btn-whatsapp:hover {
-    background-color: #1ebe58;
-}
+.btn-whatsapp:hover { background-color: #1ebe58; }
 
 /* ==========================================================================
-   12. MEDIA QUERIES (MOBILE RESPONSIVENESS)
+   6. MEDIA QUERIES (MOBILE RESPONSIVENESS)
    ========================================================================== */
 @media (max-width: 992px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-    }
+    .about-grid { grid-template-columns: 1fr; }
     .room-gallery-grid {
         grid-template-columns: 1fr;
         grid-template-rows: 300px 200px 200px;
     }
-    .room-description-split {
-        grid-template-columns: 1fr;
-    }
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+    .room-description-split { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
     /* Mobile Menu Drawer Activation */
-    .burger-menu {
-        display: block;
-    }
-
+    .burger-menu { display: block; }
+    
     .nav-links {
-        position: fixed;
-        right: -100%;
-        top: 0;
-        width: 75%;
+        position: fixed; 
+        right: -100%; 
+        top: 0; 
+        width: 75%; 
         height: 100vh;
-        background-color: var(--secondary-color);
+        background-color: var(--secondary-color); 
         flex-direction: column;
-        justify-content: center;
-        gap: 2.5rem;
+        justify-content: center; 
+        gap: 2.5rem; 
         z-index: 101;
-        box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+        box-shadow: -5px 0 25px rgba(0,0,0,0.5); 
         transition: right 0.4s ease;
     }
-
-    .nav-links.active {
-        right: 0;
-    }
+    
+    .nav-links.active { right: 0; }
 
     /* Burger Animation */
     .burger-menu.active .burger-bar:nth-child(1) {
@@ -705,16 +333,11 @@ footer {
     .footer-grid { grid-template-columns: 1fr; }
     
     /* Lightbox Mobile Fixes */
-    #lightbox-image {
-        max-width: 95%;
-    }
-    .lightbox-prev, .lightbox-next {
-        display: none; /* User swipes on mobile */
-    }
+    #lightbox-image { max-width: 95%; }
+    .lightbox-prev, .lightbox-next { display: none; /* User swipes on mobile */ }
     .lightbox-close {
         top: 15px;
         right: 20px;
         font-size: 3rem;
     }
 }
-
