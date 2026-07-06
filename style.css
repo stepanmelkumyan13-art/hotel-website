@@ -499,3 +499,48 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
   border-radius: 8px; /* Keeps the premium rounded corners */
   cursor: pointer;
 }
+/* ==========================================
+   FORCE FULL-SIZE PHOTOS & MOBILE OVERLAP FIX
+   ========================================== */
+
+/* 1. Force the thumbnails to stack vertically and be full width */
+.thumbnails {
+  display: flex !important;
+  flex-direction: column !important; /* Stacks vertically */
+  gap: 20px !important;
+  margin-top: 20px !important;
+}
+
+.thumbnails img {
+  width: 100% !important; /* Matches the width of the main image */
+  height: auto !important;
+  max-height: none !important; /* Removes any old height restrictions */
+  object-fit: cover !important;
+  border-radius: 8px !important;
+}
+
+/* 2. Force the text to drop down on mobile */
+@media (max-width: 768px) {
+  /* Push the gallery block away from the text */
+  .room-gallery {
+    margin-bottom: 40px !important; 
+    position: relative !important;
+  }
+  
+  /* Kill any old margins that are pulling the text upward */
+  .room-info, 
+  .room-details {
+    margin-top: 0px !important; 
+    padding-top: 20px !important;
+    position: relative !important;
+    clear: both !important;
+    z-index: 2 !important;
+  }
+  
+  /* Give the title room to breathe */
+  .room-info h1, 
+  .room-details h1 {
+    line-height: 1.4 !important;
+    padding-top: 10px !important;
+  }
+}
