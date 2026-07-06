@@ -3,75 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Номер Superior Sea View в отеле Морская Жемчужина. Панорамный вид на море, балкон, премиальное обслуживание.">
+    <meta name="description" content="Superior Sea View - стильный номер с панорамными окнами и видом на океан.">
     <title>Superior Sea View | Морская Жемчужина</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="inner-page">
+<body>
 
-    <header id="navbar" class="scrolled">
+    <header id="navbar">
         <div class="container nav-wrapper">
-            <a href="index.html" class="logo" style="text-decoration: none;">Морская Жемчужина</a>
-            <nav>
+            <a href="index.html" class="logo">Морская Жемчужина</a>
+
+            <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-nav">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="main-nav" class="main-nav" aria-label="Основная навигация">
                 <ul class="nav-links">
                     <li><a href="index.html#about">О курорте</a></li>
                     <li><a href="index.html#rooms">Номера</a></li>
                     <li><a href="index.html#services">Услуги и SPA</a></li>
                     <li><a href="index.html#contacts">Контакты</a></li>
                 </ul>
+                <a href="index.html#rooms" class="btn btn-gold header-btn mobile-book-btn">Бронь</a>
             </nav>
-            <a href="#book-now" class="btn btn-gold header-btn">Бронь</a>
         </div>
     </header>
+    <div class="nav-overlay" id="nav-overlay" hidden></div>
 
-    <section class="room-detail-section">
-        <div class="container">
-            
-            <div class="breadcrumbs">
-                <a href="index.html">Главная</a> / <a href="index.html#rooms">Номера</a> / <span>Superior Sea View</span>
-            </div>
-
-            <div class="room-layout">
-                <div class="room-gallery-wrapper">
-                    <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1000&q=80" alt="Superior Sea View" id="main-room-image" class="main-image">
-                    
-                    <div class="gallery-thumbnails">
-                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=400&q=80" alt="Вид на кровать" class="thumb active-thumb">
-                        <img src="https://images.unsplash.com/photo-1618773928120-2c15f208151c?auto=format&fit=crop&w=400&q=80" alt="Балкон с видом на море" class="thumb">
-                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80" alt="Ванная комната" class="thumb">
+    <main class="container room-template">
+        <div class="room-split">
+            <div class="gallery-container">
+                <div class="main-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1000&q=80" alt="Main view of Superior Sea View room">
+                </div>
+                <div class="thumbnails-grid">
+                    <div class="thumb-wrapper active">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=400&q=80" alt="Room View">
+                    </div>
+                    <div class="thumb-wrapper">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=400&q=80" alt="Bathroom View">
+                    </div>
+                    <div class="thumb-wrapper">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=400&q=80" alt="Balcony View">
                     </div>
                 </div>
-
-                <div class="room-info" id="book-now">
-                    <h1 class="room-title">Superior Sea View</h1>
-                    <p class="price-tag">От 8 500 ₽ / ночь</p>
-                    
-                    <p class="room-description">
-                        Просторный и светлый номер площадью 35 кв.м. с собственной террасой. Пробуждайтесь под шум прибоя и наслаждайтесь захватывающим панорамным видом на залив прямо из вашей кровати King-size.
-                    </p>
-
-                    <h3 class="amenities-title">В номере:</h3>
-                    <ul class="amenities-list">
-                        <li>Кровать King-size с ортопедическим матрасом</li>
-                        <li>Собственный меблированный балкон</li>
-                        <li>Тропический душ и премиальная косметика</li>
-                        <li>Кофемашина Nespresso и чайная станция</li>
-                        <li>Высокоскоростной Wi-Fi</li>
-                        <li>Smart TV 55"</li>
-                    </ul>
-
-                    <a href="https://wa.me/79998887766?text=Здравствуйте!%20Хочу%20узнать%20о%20наличии%20номера%20Superior%20Sea%20View%20на%20даты..." class="btn btn-gold btn-full" target="_blank">
-                        Забронировать в WhatsApp
-                    </a>
-                    <p class="booking-note">*Прямое бронирование гарантирует лучшую цену без комиссий агрегаторов.</p>
-                </div>
             </div>
 
+            <div class="room-details">
+                <h1>Superior Sea View</h1>
+                <p class="price-tag">От 8 500 ₽ / ночь</p>
+                <p>Стильный номер с панорамными окнами и завораживающим видом на океан. Каждая деталь интерьера продумана для вашего идеального романтического уикенда вдвоем. Встречайте рассветы прямо из постели.</p>
+                
+                <ul class="room-features">
+                    <li>Площадь: 45 кв.м</li>
+                    <li>Кровать King-size с ортопедическим матрасом</li>
+                    <li>Панорамный вид на океан</li>
+                    <li>Тропический душ и премиальная косметика</li>
+                    <li>Кофемашина Nespresso в номере</li>
+                </ul>
+
+                <a href="https://wa.me/79998887766?text=Здравствуйте!%20Хочу%20забронировать%20Superior%20Sea%20View." class="btn btn-gold" target="_blank">Забронировать в WhatsApp</a>
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">*Прямое бронирование гарантирует лучшую цену без комиссий.</p>
+            </div>
         </div>
-    </section>
+    </main>
 
     <footer>
         <div class="container footer-content">

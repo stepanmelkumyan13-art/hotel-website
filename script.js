@@ -1,80 +1,118 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    /* ==========================================================================
-       1. ЛОГИКА АДАПТИВНОЙ МОБИЛЬНОЙ НАВИГАЦИИ (ГАМБУРГЕР-МЕНЮ)
-       ========================================================================== */
-    const navToggle = document.getElementById('nav-toggle');
-    const mainNav = document.getElementById('main-nav');
-    const navOverlay = document.getElementById('nav-overlay');
-    const navLinks = document.querySelectorAll('.nav-links a, .mobile-book-btn');
+    // ==========================================
+    // 1. МОБИЛЬНОЕ МЕНЮ (ГАМБУРГЕР) И ОВЕРЛЕЙ
+    // ==========================================
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
 
-    // Функция переключения состояния меню (открыть/закрыть)
+    // Создаем затемняющий фон (оверлей) при открытии меню
+    const overlay = document.createElement('div');
+    overlay.classList.add('nav-overlay');
+    body.appendChild(overlay);
+
     function toggleMenu() {
-        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
         
-        navToggle.setAttribute('aria-expanded', !isExpanded);
-        mainNav.classList.toggle('active');
+        mobileMenuBtn.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        overlay.classList.toggle('active');
         
-        if (isExpanded) {
-            navOverlay.setAttribute('hidden', '');
-            document.body.style.overflow = ''; // Разрешаем скролл страницы
+        // Блокируем прокрутку сайта на фоне, когда меню открыто
+        if (!isExpanded) {
+            body.style.overflow = 'hidden';
         } else {
-            navOverlay.removeAttribute('hidden');
-            document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+            body.style.overflow = '';
         }
     }
 
-    // Функция принудительного закрытия меню
-    function closeMenu() {
-        navToggle.setAttribute('aria-expanded', 'false');
-        mainNav.classList.remove('active');
-        navOverlay.setAttribute('hidden', '');
-        document.body.style.overflow = '';
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMenu);
     }
 
-    // Привязка кликов к элементам управления меню
-    if (navToggle && mainNav && navOverlay) {
-        navToggle.addEventListener('click', toggleMenu);
-        navOverlay.addEventListener('click', closeMenu);
+    // Закрытие меню при клике на темный фон
+    if (overlay) {
+        overlay.addEventListener('click', toggleMenu);
+    }
 
-        // Автоматически закрывать панель при выборе любого пункта меню
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Если ссылка якорная (на текущей странице), просто закрываем меню
-                if (link.getAttribute('href').startsWith('#')) {
-                    closeMenu();
-                }
-            });
+    // Закрытие меню при клике на любую ссылку навигации (удобно для мобильных)
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+
+    // ==========================================
+    // 2. ПЛАВНЫЙ СКРОЛЛ ДЛЯ ЯКОРНЫХ ССЫЛОК
+    // ==========================================
+    // Скрипт срабатывает ТОЛЬКО для ссылок, начинающихся с "#", 
+    // поэтому он не сломает переход на другие страницы (например, room-family.html)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return; // Игнорируем пустые якоря
+            
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                e.preventDefault(); // Отменяем резкий прыжок
+                
+                // Учитываем высоту прилипающей шапки, чтобы она не перекрывала заголовок
+                const headerHeight = document.querySelector('header').offsetHeight || 80;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // ==========================================
+    // 3. АНИМАЦИЯ ШАПКИ (NAVBAR) ПРИ ПРОКРУТКЕ
+    // ==========================================
+    const header = document.querySelector('header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled'); // Добавляет тень/фон при скролле вниз
+            } else {
+                header.classList.remove('scrolled'); // Убирает при возврате наверх
+            }
         });
     }
 
-    /* ==========================================================================
-       2. ИНТЕРАКТИВНАЯ ГАЛЕРЕЯ ДЛЯ СТРАНИЦ НОМЕРОВ (ROOM PAGES)
-       ========================================================================== */
-    const mainImage = document.querySelector('.main-img-wrapper img');
-    const thumbnails = document.querySelectorAll('.thumb-wrapper');
+    // ==========================================
+    // 4. ИНТЕРАКТИВНАЯ ГАЛЕРЕЯ ДЛЯ СТРАНИЦ НОМЕРОВ
+    // ==========================================
+    // Проверяем наличие элементов галереи на странице, чтобы не было ошибок в консоли на главной странице
+    const mainImage = document.querySelector('.main-room-image');
+    const thumbnails = document.querySelectorAll('.thumbnail');
 
     if (mainImage && thumbnails.length > 0) {
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                const thumbImg = thumb.querySelector('img');
-                if (thumbImg) {
-                    // Сохраняем текущую главную картинку во временную переменную
-                    const currentMainSrc = mainImage.src;
-                    const currentMainAlt = mainImage.alt;
-
-                    // Меняем главную картинку на ту, на которую кликнули
-                    mainImage.src = thumbImg.src;
-                    mainImage.alt = thumbImg.alt;
-
-                    // Возвращаем старую главную картинку в миниатюру
-                    thumbImg.src = currentMainSrc;
-                    thumbImg.alt = currentMainAlt;
-
-                    // Обновляем визуальный класс активной рамки
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                }
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                // Убираем обводку/активный статус у всех миниатюр
+                thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                
+                // Добавляем активный статус кликнутой миниатюре
+                this.classList.add('active');
+                
+                // Берем картинку из миниатюры и подставляем в главное окно с легким эффектом затухания
+                const newImageSrc = this.getAttribute('src');
+                
+                mainImage.style.opacity = '0.7';
+                setTimeout(() => {
+                    mainImage.setAttribute('src', newImageSrc);
+                    mainImage.style.opacity = '1';
+                    mainImage.style.transition = 'opacity 0.2s ease-in-out';
+                }, 100);
             });
         });
     }

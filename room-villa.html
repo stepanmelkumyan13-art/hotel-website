@@ -3,75 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Президентская вилла Presidential Villa. Отдельный инфинити-бассейн, персональный дворецкий и абсолютная приватность.">
+    <meta name="description" content="Presidential Villa - вершина роскоши с личным бассейном и батлером.">
     <title>Presidential Villa | Морская Жемчужина</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="inner-page">
+<body>
 
-    <header id="navbar" class="scrolled">
+    <header id="navbar">
         <div class="container nav-wrapper">
-            <a href="index.html" class="logo" style="text-decoration: none;">Морская Жемчужина</a>
-            <nav>
+            <a href="index.html" class="logo">Морская Жемчужина</a>
+
+            <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-nav">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="main-nav" class="main-nav" aria-label="Основная навигация">
                 <ul class="nav-links">
                     <li><a href="index.html#about">О курорте</a></li>
                     <li><a href="index.html#rooms">Номера</a></li>
                     <li><a href="index.html#services">Услуги и SPA</a></li>
                     <li><a href="index.html#contacts">Контакты</a></li>
                 </ul>
+                <a href="index.html#rooms" class="btn btn-gold header-btn mobile-book-btn">Бронь</a>
             </nav>
-            <a href="#book-now" class="btn btn-gold header-btn">Бронь</a>
         </div>
     </header>
+    <div class="nav-overlay" id="nav-overlay" hidden></div>
 
-    <section class="room-detail-section">
-        <div class="container">
-            
-            <div class="breadcrumbs">
-                <a href="index.html">Главная</a> / <a href="index.html#rooms">Номера</a> / <span>Presidential Villa</span>
-            </div>
-
-            <div class="room-layout">
-                <div class="room-gallery-wrapper">
-                    <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1000&q=80" alt="Presidential Villa" id="main-room-image" class="main-image">
-                    
-                    <div class="gallery-thumbnails">
-                        <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=400&q=80" alt="Частный бассейн" class="thumb active-thumb">
-                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80" alt="Гостиная виллы" class="thumb">
-                        <img src="https://images.unsplash.com/photo-1622866306950-81d17097f411?auto=format&fit=crop&w=400&q=80" alt="Ванная с панорамным видом" class="thumb">
+    <main class="container room-template">
+        <div class="room-split">
+            <div class="gallery-container">
+                <div class="main-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1000&q=80" alt="Main view of Presidential Villa">
+                </div>
+                <div class="thumbnails-grid">
+                    <div class="thumb-wrapper active">
+                        <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=400&q=80" alt="Villa Exterior Pool View">
+                    </div>
+                    <div class="thumb-wrapper">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80" alt="Villa Living Space">
+                    </div>
+                    <div class="thumb-wrapper">
+                        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=400&q=80" alt="Private Deck View">
                     </div>
                 </div>
-
-                <div class="room-info" id="book-now">
-                    <h1 class="room-title">Presidential Villa</h1>
-                    <p class="price-tag">От 45 000 ₽ / ночь</p>
-                    
-                    <p class="room-description">
-                        Вершина роскоши и абсолютного уединения. Отдельно стоящая резиденция площадью 150 кв.м. с собственным инфинити-бассейном на террасе, прямым спуском к уединенной части пляжа и панорамным видом на океан.
-                    </p>
-
-                    <h3 class="amenities-title">Привилегии виллы:</h3>
-                    <ul class="amenities-list">
-                        <li>Частный инфинити-бассейн с подогревом</li>
-                        <li>Услуги персонального батлера 24/7</li>
-                        <li>Приватная терраса с шезлонгами и обеденной зоной</li>
-                        <li>Винный шкаф с премиальной коллекцией</li>
-                        <li>Ванна из натурального камня с видом на море</li>
-                        <li>Ежедневный массаж (1 час) включен в стоимость</li>
-                    </ul>
-
-                    <a href="https://wa.me/79998887766?text=Здравствуйте!%20Хочу%20узнать%20о%20наличии%20Presidential%20Villa%20на%20даты..." class="btn btn-gold btn-full" target="_blank">
-                        Забронировать в WhatsApp
-                    </a>
-                    <p class="booking-note">*Индивидуальные условия трансфера из аэропорта предоставляются комплиментарно.</p>
-                </div>
             </div>
 
+            <div class="room-details">
+                <h1>Presidential Villa</h1>
+                <p class="price-tag">От 45 000 ₽ / ночь</p>
+                <p>Безупречная уединенность и премиальный сервис. Отдельно стоящая резиденция с собственным выходом к океану, инфинити-бассейном и услугами личного батлера, готового исполнить любые ваши пожелания 24/7.</p>
+                
+                <ul class="room-features">
+                    <li>Площадь: 250 кв.м (включая террасу)</li>
+                    <li>Собственный инфинити-бассейн с подогревом</li>
+                    <li>Персональный батлер 24/7</li>
+                    <li>VIP-трансфер из аэропорта на автомобиле премиум-класса</li>
+                    <li>Организация приватных ужинов на вилле</li>
+                </ul>
+
+                <a href="https://wa.me/79998887766?text=Здравствуйте!%20Интересует%20VIP-бронирование%20Presidential%20Villa." class="btn btn-gold" target="_blank">Связаться с консьержем</a>
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">*Индивидуальный подход и абсолютная конфиденциальность.</p>
+            </div>
         </div>
-    </section>
+    </main>
 
     <footer>
         <div class="container footer-content">

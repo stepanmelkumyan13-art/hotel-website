@@ -2,11 +2,11 @@
    1. ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ
    ========================================================================== */
 :root {
-    --primary-color: #1a252f;    /* Глубокий океанический темно-синий */
+    --primary-color: #1a252f;    /* Глубокий темно-синий */
     --accent-color: #d4af37;     /* Премиальный золотой */
-    --accent-hover: #b8972f;     /* Темно-золотой при наведении */
+    --accent-hover: #b8972f;     /* Золотой при наведении */
     --text-color: #333333;       /* Основной текст */
-    --light-bg: #f9f9f9;         /* Светлый фон секций */
+    --light-bg: #f9f9f9;         /* Светлый фон */
     --white: #ffffff;
     --transition: all 0.3s ease;
 }
@@ -23,7 +23,7 @@ html {
 
 body {
     font-family: 'Montserrat', sans-serif;
-    color: --text-color;
+    color: var(--text-color);
     line-height: 1.6;
     background-color: var(--white);
     overflow-x: hidden;
@@ -40,7 +40,7 @@ h1, h2, h3, h4, .logo {
 }
 
 /* ==========================================================================
-   2. КОМПОНЕНТЫ (КНОПКИ И СЕТКА)
+   2. КОМПОНЕНТЫ (КНОПКИ И ЗАГОЛОВКИ)
    ========================================================================== */
 .btn {
     display: inline-block;
@@ -54,6 +54,7 @@ h1, h2, h3, h4, .logo {
     transition: var(--transition);
     border: none;
     cursor: pointer;
+    text-align: center;
 }
 
 .btn-gold {
@@ -66,20 +67,13 @@ h1, h2, h3, h4, .logo {
     color: var(--white);
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-    margin-top: 3rem;
-}
-
 .section-title {
     text-align: center;
     font-size: 2.5rem;
     color: var(--primary-color);
     position: relative;
     padding-bottom: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 }
 
 .section-title::after {
@@ -94,11 +88,10 @@ h1, h2, h3, h4, .logo {
 }
 
 /* ==========================================================================
-   3. ШАПКА И НАВИГАЦИЯ (АДАПТИВНАЯ)
+   3. ШАПКА И НАВИГАЦИЯ (ДЕСКТОП И МОБИЛЬНАЯ)
    ========================================================================== */
 header {
     background-color: var(--primary-color);
-    color: var(--white);
     padding: 1.2rem 0;
     position: sticky;
     top: 0;
@@ -144,7 +137,7 @@ header {
     color: var(--accent-color);
 }
 
-/* Кнопка гамбургера (скрыта на десктопе) */
+/* Элементы бургер-меню (скрыты на десктопе) */
 .nav-toggle {
     display: none;
     background: none;
@@ -164,7 +157,6 @@ header {
     transition: var(--transition);
 }
 
-/* Оверлей (затемнение фона) */
 .nav-overlay {
     position: fixed;
     top: 0;
@@ -183,14 +175,15 @@ header {
 }
 
 /* ==========================================================================
-   4. ГЛАВНЫЙ ЭКРАН (HERO) И ДРУГИЕ СЕКЦИИ INDEX.HTML
+   4. ГЛАВНЫЙ ЭКРАН (HERO)
    ========================================================================== */
 .hero {
     background: linear-gradient(rgba(26, 37, 47, 0.6), rgba(26, 37, 47, 0.6)), 
-                url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+                url('https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
     height: 85vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: var(--white);
     text-align: center;
 }
@@ -198,6 +191,7 @@ header {
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .hero h1 {
@@ -212,9 +206,17 @@ header {
     font-weight: 300;
 }
 
-/* Карточки номеров */
+/* ==========================================================================
+   5. СЕТКА НОМЕРОВ (КАТАЛОГ)
+   ========================================================================== */
 #rooms {
     padding: 5rem 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
 }
 
 .card {
@@ -270,10 +272,11 @@ header {
 
 .card .btn {
     margin: 0 1.5rem 1.5rem;
-    text-align: center;
 }
 
-/* Услуги */
+/* ==========================================================================
+   6. УСЛУГИ И SPA
+   ========================================================================== */
 .services {
     background-color: var(--light-bg);
     padding: 5rem 0;
@@ -283,7 +286,6 @@ header {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
 }
 
 .service-item {
@@ -293,6 +295,12 @@ header {
     text-align: center;
     border-top: 3px solid var(--accent-color);
     box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+    transition: var(--transition);
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
 .service-item h4 {
@@ -301,16 +309,11 @@ header {
     margin-bottom: 1rem;
 }
 
-/* Контакты */
+/* ==========================================================================
+   7. КОНТАКТЫ
+   ========================================================================== */
 #contacts {
     padding: 5rem 0;
-}
-
-.contact-subtitle {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto 3rem;
-    color: #666;
 }
 
 .contact-wrapper {
@@ -333,6 +336,7 @@ header {
     margin-top: 2rem;
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .messengers .btn {
@@ -350,9 +354,12 @@ header {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    height: 400px;
 }
 
-/* Подвал */
+/* ==========================================================================
+   8. ПОДВАЛ (FOOTER)
+   ========================================================================== */
 footer {
     background-color: var(--primary-color);
     color: rgba(255,255,255,0.7);
@@ -367,7 +374,7 @@ footer {
 }
 
 /* ==========================================================================
-   5. СТИЛИ ДЛЯ СТРАНИЦ НОМЕРОВ (ROOM PAGES - SPLIT LAYOUT & GALLERY)
+   9. СТРАНИЦЫ НОМЕРОВ (ВНУТРЕННИЕ СТРАНИЦЫ - ГАЛЕРЕЯ И ОПИСАНИЕ)
    ========================================================================== */
 .room-template {
     padding: 4rem 0;
@@ -457,7 +464,7 @@ footer {
 }
 
 /* ==========================================================================
-   6. МЕДИА-ЗАПРОСЫ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ (МЕНЮ-БАР)
+   10. МЕДИА-ЗАПРОСЫ (МОБИЛЬНАЯ АДАПТАЦИЯ И БУРГЕР-МЕНЮ)
    ========================================================================== */
 @media (max-width: 992px) {
     .contact-wrapper {
@@ -471,20 +478,22 @@ footer {
 }
 
 @media (max-width: 768px) {
+    /* Типографика для мобильных */
     .hero h1 { font-size: 2.3rem; }
     .hero p { font-size: 1rem; }
     .section-title { font-size: 2rem; }
+    .room-details h1 { font-size: 2.2rem; }
 
-    /* Активация кнопки гамбургера */
+    /* Показ кнопки гамбургера */
     .nav-toggle {
         display: flex;
     }
 
-    /* Превращение панели навигации в выезжающий бар */
+    /* Боковое выезжающее меню */
     .main-nav {
         position: fixed;
         top: 0;
-        right: -100%; /* Полностью скрыт справа */
+        right: -100%; 
         width: 75%;
         max-width: 320px;
         height: 100vh;
@@ -498,7 +507,6 @@ footer {
         z-index: 1005;
     }
 
-    /* Класс включения выезжающего меню */
     .main-nav.active {
         right: 0;
     }
@@ -526,7 +534,7 @@ footer {
         text-align: center;
     }
 
-    /* Анимация превращения полосок бургер-меню в крестик (X) */
+    /* Анимация крестика для гамбургера */
     .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
