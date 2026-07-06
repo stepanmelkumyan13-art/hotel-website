@@ -307,8 +307,7 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
 .room-title { 
     font-size: 2.5rem;
      color: var(--primary-color); 
-     margin-bottom: 10px; 
-     margin-top: 100px; 
+     margin-bottom: 10px;
     }
 .room-info .price-tag { font-size: 1.5rem; margin-bottom: 25px; }
 .room-description { font-size: 1.05rem; margin-bottom: 30px; color: var(--text-color); }
@@ -354,8 +353,11 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
         padding: 1rem 0;
     }
 
-    .room-info {
-        padding: 100px 0; 
+   .room-title { 
+    font-size: 2.5rem;
+     color: var(--primary-color); 
+     margin-bottom: 10px; 
+     margin-top: 100px; 
     }
 
     .nav-toggle {
