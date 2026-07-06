@@ -117,3 +117,93 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// --- Lightbox Gallery Logic ---
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Give all your room images a class of 'gallery-clickable' in your HTML
+    const galleryImages = document.querySelectorAll('.gallery-clickable'); 
+    const lightbox = document.getElementById('lightbox-modal');
+    
+    if(galleryImages.length > 0 && lightbox) {
+        const lightboxImg = document.getElementById('lightbox-image');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const prevBtn = document.querySelector('.lightbox-prev');
+        const nextBtn = document.querySelector('.lightbox-next');
+        
+        let currentIndex = 0;
+
+        // Open Lightbox
+        galleryImages.forEach((img, index) => {
+            img.style.cursor = 'pointer'; // Make it look clickable
+            img.addEventListener('click', () => {
+                currentIndex = index;
+                showImage(currentIndex);
+                lightbox.classList.add('active');
+                document.body.classList.add('lightbox-open'); // Lock scrolling
+            });
+        });
+
+        // Update Image
+        function showImage(index) {
+            lightboxImg.src = galleryImages[index].src;
+        }
+
+        // Next Image
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        // Prev Image
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        // Close Lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.classList.remove('lightbox-open'); // Unlock scrolling
+        }
+
+        // Button Listeners
+        nextBtn.addEventListener('click', nextImage);
+        prevBtn.addEventListener('click', prevImage);
+        closeBtn.addEventListener('click', closeLightbox);
+
+        // Click outside the image to close
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Keyboard support (Arrows and Escape)
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // --- MOBILE SWIPE GESTURES ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        lightbox.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        lightbox.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (swipeDistance < -50) {
+                nextImage(); // Swiped left -> show next
+            }
+            if (swipeDistance > 50) {
+                prevImage(); // Swiped right -> show prev
+            }
+        }
+    }
+});
