@@ -171,3 +171,112 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/* ==========================================================================
+   HOTEL INTERACTIVE LOGIC (LIGHTBOX, RESPONSIVE DRAWER & ROUTING ROUTINES)
+   ========================================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+    // ----------------------------------------------------------------------
+    // FIX 4: Secure Smooth-Scroll Routing (Anchor Interception Patch)
+    // ----------------------------------------------------------------------
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            
+            // Safe Check: ONLY prevent default routing if it's an internal hash anchor on this page
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            // Real pages like "room-standard.html" route naturally now without snapping to footer!
+        });
+    });
+
+    // ----------------------------------------------------------------------
+    // FEATURE 2 & MOBILE UX: Hamburger Drawer Setup & Page Body Scroll Lock
+    // ----------------------------------------------------------------------
+    const burgerBtn = document.querySelector('.hamburger-menu-btn');
+    const drawerMenu = document.querySelector('.mobile-drawer');
+    const drawerOverlay = document.querySelector('.mobile-overlay');
+    const drawerLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function toggleMobileMenu() {
+        const isActive = drawerMenu.classList.toggle('active');
+        drawerOverlay.classList.toggle('active');
+        
+        // Prevent/Restore background scroll while mobile menu overlay is opened
+        if (isActive) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (burgerBtn && drawerMenu && drawerOverlay) {
+        burgerBtn.addEventListener('click', toggleMobileMenu);
+        drawerOverlay.addEventListener('click', toggleMobileMenu);
+        drawerLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
+    }
+
+    // ----------------------------------------------------------------------
+    // FEATURE 1: Frosted Glass Lightbox Structural Implementation
+    // ----------------------------------------------------------------------
+    // Select all page room image thumbnail list
+    const images = Array.from(document.querySelectorAll('.room-gallery-grid img, .gallery-clickable img, img.gallery-clickable'));
+    
+    if (images.length > 0) {
+        // Build the structure programmatically if not manually present in HTML structure
+        let modal = document.getElementById('lightbox-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'lightbox-modal';
+            modal.innerHTML = `
+                <div class="lightbox-content-wrapper">
+                    <button id="lightbox-close" class="lightbox-btn">&times;</button>
+                    <button id="lightbox-prev" class="lightbox-btn">&#10094;</button>
+                    <img id="lightbox-img" src="" alt="Expanded View">
+                    <button id="lightbox-next" class="lightbox-btn">&#10095;</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('lightbox-close');
+        const prevBtn = document.getElementById('lightbox-prev');
+        const nextBtn = document.getElementById('lightbox-next');
+        let currentIndex = 0;
+
+        function showImage(index) {
+            if (index < 0) index = images.length - 1;
+            if (index >= images.length) index = 0;
+            currentIndex = index;
+            lightboxImg.src = images[currentIndex].src;
+        }
+
+        // Bind image event clicks to initiate component state
+        images.forEach((img, index) => {
+            img.classList.add('gallery-clickable');
+            img.addEventListener('click', function () {
+                showImage(index);
+                modal.classList.add('active');
+            });
+        });
+
+        // Event UI Controls
+        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
+        nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
+        
+        // Dismiss when clicking the structural backdrop outside image context
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    }
+});
