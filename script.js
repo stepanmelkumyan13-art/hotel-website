@@ -129,3 +129,81 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const lightbox = document.getElementById('lightbox');
+  
+  // If the page doesn't have a lightbox (like index.html), exit the script safely
+  if (!lightbox) return; 
+
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.querySelector('.close-lightbox');
+  const prevBtn = document.querySelector('.prev-arrow');
+  const nextBtn = document.querySelector('.next-arrow');
+
+  /* * TARGET YOUR IMAGES: 
+   * This selects your main room photo and any thumbnails. 
+   * Adjust the '.gallery img' selector if your HTML uses a different class name.
+   */
+  const roomImages = document.querySelectorAll('.gallery img, .main-image img, .thumbnails img'); 
+  
+  let currentIndex = 0;
+  let imageUrls = [];
+
+  // Loop through all images, store their URLs for indexing, and make them clickable
+  roomImages.forEach((img, index) => {
+    img.style.cursor = 'pointer'; // Visual cue that they can be clicked
+    imageUrls.push(img.src);      // Save source for Next/Prev indexing
+
+    img.addEventListener('click', () => {
+      currentIndex = index; // Set index to the image that was clicked
+      openLightbox(img.src);
+    });
+  });
+
+  // Open Lightbox state management
+  function openLightbox(src) {
+    lightbox.style.display = 'flex'; 
+    lightboxImg.src = src;
+    document.body.style.overflow = 'hidden'; // Prevents background page from scrolling
+  }
+
+  // Close Lightbox state management
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = ''; // Restores normal scrolling
+  }
+
+  // Indexing: Show Next
+  function showNext() {
+    currentIndex = (currentIndex + 1) % imageUrls.length;
+    lightboxImg.src = imageUrls[currentIndex];
+  }
+
+  // Indexing: Show Previous
+  function showPrev() {
+    // Adding imageUrls.length prevents negative indexes when looping backward
+    currentIndex = (currentIndex - 1 + imageUrls.length) % imageUrls.length;
+    lightboxImg.src = imageUrls[currentIndex];
+  }
+
+  // --- Event Listeners ---
+  closeBtn.addEventListener('click', closeLightbox);
+  nextBtn.addEventListener('click', showNext);
+  prevBtn.addEventListener('click', showPrev);
+
+  // Close when clicking on the blurred background overlay (but not the image itself)
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  // Optional Pro-Feature: Keyboard Navigation
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    }
+  });
+});
