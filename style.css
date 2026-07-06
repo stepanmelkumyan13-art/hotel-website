@@ -404,6 +404,24 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
     .hero h1 { font-size: 2.5rem; }
     .contact-wrapper { flex-direction: column; }
     .footer-content { flex-direction: column; gap: 20px; text-align: center; }
+    /* Pushes the text container down */
+   .room-info, 
+   .room-details {
+    margin-top: 40px !important; 
+    padding-top: 10px;
+   }
+  
+  /* Adds space below the last photo just in case */
+    .room-gallery {
+    margin-bottom: 40px !important; 
+  }
+  
+  /* Make sure the title has line-height room so it doesn't squish itself */
+    .room-info h1, 
+    .room-details h1 {
+    line-height: 1.3;
+    margin-bottom: 15px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -465,3 +483,19 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
 .prev-arrow:hover, .next-arrow:hover { background: rgba(255, 255, 255, 0.5); }
 .prev-arrow { left: 5%; }
 .next-arrow { right: 5%; }
+
+/* --- FULL SIZE ROOM PHOTOS --- */
+.thumbnails {
+  display: flex;
+  flex-direction: column; /* Stacks the photos vertically instead of side-by-side */
+  gap: 20px; /* Adds space between the big photos */
+  margin-top: 20px;
+}
+
+.thumbnails img {
+  width: 100%; /* Forces them to be the exact same width as the main photo */
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px; /* Keeps the premium rounded corners */
+  cursor: pointer;
+}
