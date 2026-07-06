@@ -1,36 +1,57 @@
 /* ==========================================================================
-   1. ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ
+   1. GLOBAL VARIABLES & THEME SETTINGS
    ========================================================================== */
 :root {
-    --primary-color: #1a252f;    /* Глубокий темно-синий */
-    --accent-color: #d4af37;     /* Премиальный золотой */
-    --accent-hover: #b8972f;     /* Золотой при наведении */
-    --text-color: #333333;       /* Основной текст */
-    --light-bg: #f9f9f9;         /* Светлый фон */
+    --primary-color: #c5a880;       /* Premium Gold / Accent */
+    --primary-hover: #b0926a;       /* Darker Gold for hover states */
+    --secondary-color: #1a2632;     /* Deep Luxury Slate / Navy */
+    --bg-light: #f9f6f0;            /* Warm Vanilla White for backgrounds */
+    --text-dark: #333333;           /* Main reading text */
+    --text-light: #777777;          /* Secondary reading text */
     --white: #ffffff;
-    --transition: all 0.3s ease;
+    --black: #000000;
+    --border-color: #eaeaea;
+    --transition-smooth: all 0.3s ease;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
+/* ==========================================================================
+   2. RESET & BASE TYPOGRAPHY
+   ========================================================================== */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Smooth anchor scrolling */
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    color: var(--text-color);
-    line-height: 1.6;
+    color: var(--text-dark);
     background-color: var(--white);
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .logo {
+/* Typography styles for headings */
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Prevent layout scrolling when interactive layers (menus/galleries) are active */
+body.no-scroll, body.lightbox-open {
+    overflow: hidden !important;
 }
 
 .container {
@@ -40,63 +61,21 @@ h1, h2, h3, h4, .logo {
 }
 
 /* ==========================================================================
-   2. КОМПОНЕНТЫ (КНОПКИ И ЗАГОЛОВКИ)
-   ========================================================================== */
-.btn {
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    transition: var(--transition);
-    border: none;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn-gold {
-    background-color: var(--accent-color);
-    color: var(--primary-color);
-}
-
-.btn-gold:hover {
-    background-color: var(--accent-hover);
-    color: var(--white);
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    position: relative;
-    padding-bottom: 1rem;
-    margin-bottom: 3rem;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background-color: var(--accent-color);
-}
-
-/* ==========================================================================
-   3. ШАПКА И НАВИГАЦИЯ (ДЕСКТОП И МОБИЛЬНАЯ)
+   3. HEADER & DESKTOP NAVIGATION
    ========================================================================== */
 header {
-    background-color: var(--primary-color);
-    padding: 1.2rem 0;
+    background-color: var(--secondary-color);
+    padding: 1.5rem 0;
     position: sticky;
     top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transition: background-color 0.4s ease, padding 0.4s ease;
+}
+
+header.header-scrolled {
+    padding: 0.8rem 0;
+    background-color: rgba(26, 38, 50, 0.95);
 }
 
 .nav-wrapper {
@@ -106,515 +85,635 @@ header {
 }
 
 .logo {
-    font-size: 1.6rem;
-    font-weight: 600;
     color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     text-decoration: none;
-    letter-spacing: 1px;
 }
 
-.main-nav {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
+.logo span {
+    color: var(--primary-color);
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
+    align-items: center;
 }
 
 .nav-links a {
     color: var(--white);
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.95rem;
-    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+/* Hover underline effect */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: var(--transition-smooth);
 }
 
 .nav-links a:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
-/* Элементы бургер-меню (скрыты на десктопе) */
-.nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    flex-direction: column;
-    gap: 6px;
-    padding: 5px;
-    z-index: 1010;
-}
-
-.nav-toggle-bar {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background-color: var(--white);
-    transition: var(--transition);
-}
-
-.nav-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 999;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.nav-overlay[hidden] {
-    display: none;
-    opacity: 0;
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 /* ==========================================================================
-   4. ГЛАВНЫЙ ЭКРАН (HERO)
+   4. MOBILE NAVIGATION (HAMBURGER & OVERLAY) - FIXED BUG
+   ========================================================================== */
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 102;
+    padding: 5px;
+}
+
+.burger-bar {
+    display: block;
+    width: 30px;
+    height: 3px;
+    margin: 6px auto;
+    background-color: var(--white);
+    transition: var(--transition-smooth);
+}
+
+/* THE FIX: Overlay safely hidden until triggered */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 90;
+    
+    /* These prevent the layer from blocking your website */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; 
+    
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* Catch clicks only when menu is open */
+}
+
+/* ==========================================================================
+   5. HERO SECTION
    ========================================================================== */
 .hero {
-    background: linear-gradient(rgba(26, 37, 47, 0.6), rgba(26, 37, 47, 0.6)), 
-                 url('https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-    height: 85vh;
+    height: 90vh;
+    min-height: 600px;
+    background: linear-gradient(rgba(26, 38, 50, 0.6), rgba(26, 38, 50, 0.4)), url('hero-bg.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: var(--white);
     text-align: center;
+    position: relative;
 }
 
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
+    color: var(--white);
     padding: 0 20px;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
+    color: var(--white);
     margin-bottom: 1.5rem;
-    font-weight: 400;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2.5rem;
-    font-weight: 300;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
-/* ==========================================================================
-   5. СЕТКА НОМЕРОВ (КАТАЛОГ)
-   ========================================================================== */
-#rooms {
-    padding: 5rem 0;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-}
-
-.card {
-    background: var(--white);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: var(--transition);
-    display: flex;
-    flex-direction: column;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-.card-img-wrapper {
-    height: 240px;
-    overflow: hidden;
-}
-
-.card-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
-}
-
-.card:hover .card-img-wrapper img {
-    transform: scale(1.05);
-}
-
-.card h3 {
-    font-size: 1.4rem;
-    padding: 1.5rem 1.5rem 0.5rem;
-    color: var(--primary-color);
-}
-
-.price-tag {
-    color: var(--accent-color);
+/* Primary Button Style */
+.btn-primary {
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 0 1.5rem;
-    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
 }
 
-.room-desc {
-    padding: 1rem 1.5rem 1.5rem;
-    color: #666;
-    font-size: 0.95rem;
-    flex-grow: 1;
-}
-
-.card .btn {
-    margin: 0 1.5rem 1.5rem;
-}
-
-/* ==========================================================================
-   6. УСЛУГИ И SPA
-   ========================================================================== */
-.services {
-    background-color: var(--light-bg);
-    padding: 5rem 0;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.service-item {
-    background: var(--white);
-    padding: 2.5rem 2rem;
-    border-radius: 6px;
-    text-align: center;
-    border-top: 3px solid var(--accent-color);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.02);
-    transition: var(--transition);
-}
-
-.service-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-}
-
-.service-item h4 {
-    font-size: 1.25rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(197, 168, 128, 0.3);
 }
 
 /* ==========================================================================
-   7. КОНТАКТЫ
+   6. ABOUT US SECTION
    ========================================================================== */
-#contacts {
-    padding: 5rem 0;
+.about-section {
+    padding: 6rem 0;
+    background-color: var(--white);
 }
 
-.contact-wrapper {
+.about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
 }
 
-.contact-info p {
-    margin-bottom: 1.2rem;
-    font-size: 1.05rem;
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.contact-info strong {
+.about-text p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+}
+
+/* ==========================================================================
+   7. SERVICES / AMENITIES GRID
+   ========================================================================== */
+.services-section {
+    padding: 6rem 0;
+    background-color: var(--bg-light);
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition-smooth);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.service-card i {
+    font-size: 3rem;
     color: var(--primary-color);
+    margin-bottom: 1.5rem;
 }
 
-.messengers {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+.service-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
 }
 
-.messengers .btn {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.85rem;
-    color: var(--white);
-}
-
-.messengers .whatsapp { background-color: #25D366; }
-.messengers .whatsapp:hover { background-color: #20ba5a; }
-.messengers .telegram { background-color: #0088cc; }
-.messengers .telegram:hover { background-color: #0077b3; }
-
-.map-container {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    height: 400px;
+.service-card p {
+    color: var(--text-light);
+    font-size: 0.95rem;
 }
 
 /* ==========================================================================
-   8. ПОДВАЛ (FOOTER)
+   8. ROOM CATALOG (HOME PAGE CARDS)
    ========================================================================== */
-footer {
-    background-color: var(--primary-color);
-    color: rgba(255,255,255,0.7);
-    padding: 3rem 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
+.rooms-section {
+    padding: 6rem 0;
+    background-color: var(--white);
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* ==========================================================================
-   9. СТРАНИЦЫ НОМЕРОВ (ВНУТРЕННИЕ СТРАНИЦЫ - ГАЛЕРЕЯ И ОПИСАНИЕ)
-   ========================================================================== */
-.room-template {
-    padding: 4rem 0;
-}
-
-.room-split {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-}
-
-.gallery-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.main-img-wrapper {
-    height: 450px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.main-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.thumbnails-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-
-.thumb-wrapper {
-    height: 100px;
-    border-radius: 6px;
-    overflow: hidden;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: var(--transition);
-    border: 2px solid transparent;
-}
-
-.thumb-wrapper:hover, .thumb-wrapper.active {
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
-}
-
-.thumb-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.room-details h1 {
+.section-title {
+    text-align: center;
     font-size: 2.8rem;
-    color: var(--primary-color);
+    margin-bottom: 4rem;
+}
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+.room-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition-smooth);
+}
+
+.room-card:hover {
+    box-shadow: var(--box-shadow-hover);
+    transform: translateY(-5px);
+}
+
+.room-img-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.room-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.room-card:hover .room-img-wrapper img {
+    transform: scale(1.05);
+}
+
+.room-details {
+    padding: 2rem;
+}
+
+.room-details h3 {
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
 }
 
-.room-details .price-tag {
-    padding: 0;
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+.room-price {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
 }
 
 .room-features {
-    margin: 2rem 0;
     list-style: none;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+    font-size: 0.95rem;
 }
 
 .room-features li {
-    margin-bottom: 0.8rem;
-    position: relative;
-    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.room-features li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--accent-color);
-    font-weight: bold;
+.room-features i {
+    color: var(--primary-color);
+    margin-right: 10px;
 }
 
 /* ==========================================================================
-   10. МЕДИА-ЗАПРОСЫ (МОБИЛЬНАЯ АДАПТАЦИЯ И БУРГЕР-МЕНЮ)
+   9. INNER ROOM PAGES (DETAILED VIEWS)
    ========================================================================== */
-@media (max-width: 992px) {
-    .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-    .room-split {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
+.room-inner-header {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 4rem 0;
+    text-align: center;
 }
 
-@media (max-width: 768px) {
-    /* Типографика для мобильных */
-    .hero h1 { font-size: 2.3rem; }
-    .hero p { font-size: 1rem; }
-    .section-title { font-size: 2rem; }
-    .room-details h1 { font-size: 2.2rem; }
-
-    /* Показ кнопки гамбургера */
-    .nav-toggle {
-        display: flex;
-    }
-
-    /* Боковое выезжающее меню */
-    .main-nav {
-        position: fixed;
-        top: 0;
-        right: -100%; 
-        width: 75%;
-        max-width: 320px;
-        height: 100vh;
-        background-color: var(--primary-color);
-        padding: 90px 40px 40px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2.5rem;
-        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
-        transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-        z-index: 1005;
-    }
-
-    .main-nav.active {
-        right: 0;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        gap: 1.8rem;
-        width: 100%;
-    }
-
-    .nav-links a {
-        font-size: 1.15rem;
-        display: block;
-        width: 100%;
-    }
-
-    .mobile-book-btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-
-    /* Анимация крестика для гамбургера */
-    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
-        opacity: 0;
-    }
-    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
+.room-inner-header h1 {
+    color: var(--white);
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
 }
-/* --- Lightbox Gallery Styles --- */
+
+.room-inner-content {
+    padding: 5rem 0;
+}
+
+.room-gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 250px 250px;
+    gap: 15px;
+    margin-bottom: 3rem;
+}
+
+.gallery-main {
+    grid-row: 1 / -1;
+    height: 100%;
+}
+
+.gallery-sub {
+    height: 100%;
+}
+
+.room-gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.room-description-split {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+}
+
+.room-specs h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.room-specs p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.booking-sidebar {
+    background-color: var(--bg-light);
+    padding: 2.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px;
+}
+
+.booking-sidebar h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.price-tag {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+/* ==========================================================================
+   10. INTERACTIVE LIGHTBOX GALLERY - FIXED BUG
+   ========================================================================== */
+/* Triggers for clicking thumbnails */
+.gallery-clickable {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.gallery-clickable:hover {
+    opacity: 0.85;
+}
+
 #lightbox-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
-    backdrop-filter: blur(8px); /* The beautiful blur effect */
-    -webkit-backdrop-filter: blur(8px); /* For Safari */
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    /* THE FIX: Safe defaults to prevent blocking clicks */
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Active class to show the lightbox */
 #lightbox-modal.active {
     opacity: 1;
-    pointer-events: auto;
+    visibility: visible;
+    pointer-events: auto; /* Only intercepts clicks when open */
 }
 
-/* The actual image */
 #lightbox-image {
     max-width: 85%;
     max-height: 85vh;
-    border-radius: 10px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    user-select: none; /* Prevents text highlighting when swiping */
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    user-select: none;
 }
 
-/* Navigation Buttons */
 .lightbox-close, .lightbox-prev, .lightbox-next {
     position: absolute;
-    color: white;
-    font-size: 2.5rem;
+    color: var(--white);
+    font-size: 3rem;
     cursor: pointer;
     background: none;
     border: none;
     padding: 15px;
     transition: color 0.2s;
     z-index: 1001;
+    outline: none;
 }
 
 .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
-    color: var(--primary-color); /* Uses your gold/accent color */
+    color: var(--primary-color);
 }
 
-.lightbox-close { top: 20px; right: 30px; font-size: 3rem; }
-.lightbox-prev { left: 30px; }
-.lightbox-next { right: 30px; }
+.lightbox-close { top: 20px; right: 40px; font-size: 4rem; }
+.lightbox-prev { left: 40px; }
+.lightbox-next { right: 40px; }
 
-/* Stop background scrolling when open */
-body.lightbox-open {
-    overflow: hidden; 
+/* ==========================================================================
+   11. FOOTER & CONTACTS
+   ========================================================================== */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 5rem 0 2rem;
 }
 
-/* Mobile Adjustments */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-col h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+
+.footer-col p {
+    color: #aaaaaa;
+    line-height: 1.8;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #aaaaaa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-socials {
+    display: flex;
+    gap: 15px;
+    margin-top: 1rem;
+}
+
+.footer-socials a {
+    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: var(--transition-smooth);
+}
+
+.footer-socials a:hover {
+    background-color: var(--primary-color);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #aaaaaa;
+    font-size: 0.9rem;
+}
+
+/* WhatsApp specific button styling */
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    width: 100%;
+    text-align: center;
+    display: block;
+    margin-top: 1rem;
+}
+.btn-whatsapp:hover {
+    background-color: #1ebe58;
+}
+
+/* ==========================================================================
+   12. MEDIA QUERIES (MOBILE RESPONSIVENESS)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+    .room-gallery-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 300px 200px 200px;
+    }
+    .room-description-split {
+        grid-template-columns: 1fr;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media (max-width: 768px) {
+    /* Mobile Menu Drawer Activation */
+    .burger-menu {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        width: 75%;
+        height: 100vh;
+        background-color: var(--secondary-color);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2.5rem;
+        z-index: 101;
+        box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+        transition: right 0.4s ease;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    /* Burger Animation */
+    .burger-menu.active .burger-bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    .burger-menu.active .burger-bar:nth-child(2) {
+        opacity: 0;
+    }
+    .burger-menu.active .burger-bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Section Adjustments */
+    .hero h1 { font-size: 3rem; }
+    .section-title { font-size: 2.2rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    
+    /* Lightbox Mobile Fixes */
     #lightbox-image {
-        max-width: 95%; /* Make image wider on small screens */
+        max-width: 95%;
     }
     .lightbox-prev, .lightbox-next {
-        display: none; /* Hide arrows on mobile to save space, user will swipe */
+        display: none; /* User swipes on mobile */
     }
     .lightbox-close {
-        top: 10px;
-        right: 15px;
+        top: 15px;
+        right: 20px;
+        font-size: 3rem;
     }
 }
