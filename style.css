@@ -454,8 +454,8 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
 
 /* The image inside the lightbox */
 .lightbox-img {
-    max-width: 850px;
-    max-height: 580px;
+    max-width: 90%;
+    max-height: 85vh;
     border-radius: 8px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.5);
     animation: zoomIn 0.3s ease-out;
