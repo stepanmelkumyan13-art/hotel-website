@@ -113,8 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 4. Luxury Room Page Interactive Gallery & Lightbox Logic
-    const mainImage = document.getElementById('main-room-image');
-   const thumbnails = document.querySelectorAll('.thumbnails .thumb');
+    
+    // Bulletproof selectors: checks for both IDs and Classes
+    const mainImage = document.getElementById('main-room-image') || document.querySelector('.main-room-image');
+    const thumbnails = document.querySelectorAll('.thumbnails .thumb, .gallery-thumbnails .thumb, .room-gallery img');
+    
     // Lightbox elements 
     const lightboxOverlay = document.querySelector('.lightbox'); 
     const lightboxImg = document.querySelector('.lightbox-img');
