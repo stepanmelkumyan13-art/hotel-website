@@ -285,10 +285,12 @@ footer { background-color: #0a151a; color: var(--text-light); padding: 40px 0; }
     margin-bottom: 15px;
     transition: opacity 0.3s ease;
 }
-
+.thumbnails {
+    padding-left: 15px;
+}
 .gallery-thumbnails { display: flex; gap: 15px; }
 .thumb {
-    width: calc(33.333% - 10px);
+    width: calc(33% - 5px);
     height: 100px;
     object-fit: cover;
     border-radius: 4px;
