@@ -1,4 +1,3 @@
-
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Mobile navigation toggle
+    // 2. Mobile navigation toggle (Hamburger Menu)
     const navToggle = document.getElementById('nav-toggle');
     const mainNav = document.getElementById('main-nav');
     const navOverlay = document.getElementById('nav-overlay');
@@ -55,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
+    // Ensure the hamburger menu elements exist before running logic
     if (navToggle && mainNav && navOverlay && navbar) {
         if (window.innerWidth <= 768) {
             mainNav.setAttribute('aria-hidden', 'true');
@@ -112,21 +112,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Luxury Room Page Interactive Gallery Logic
+    // 4. Luxury Room Page Interactive Gallery & Lightbox Logic
     const mainImage = document.getElementById('main-room-image');
     const thumbnails = document.querySelectorAll('.gallery-thumbnails .thumb');
+    
+    // Lightbox elements 
+    const lightboxOverlay = document.querySelector('.lightbox'); 
+    const lightboxImg = document.querySelector('.lightbox-img');
+    const closeBtn = document.querySelector('.close-lightbox');
+    const prevBtn = document.querySelector('.prev-arrow');
+    const nextBtn = document.querySelector('.next-arrow');
+    
+    let currentIndex = 0;
 
+    // Only run this logic if we are on a page that actually has the room images
     if (mainImage && thumbnails.length > 0) {
-        thumbnails.forEach(thumb => {
+        
+        // --- 1. THUMBNAIL CLICK LOGIC ---
+        thumbnails.forEach((thumb, index) => {
             thumb.addEventListener('click', function() {
-                // Change the main image source to the thumbnail source
-                mainImage.src = this.src.replace('&w=400', '&w=1000'); // upgrades resolution if using unsplash
+                // Safely update the main image regardless of local or unsplash links
+                mainImage.src = this.src; 
                 mainImage.alt = this.alt;
+                currentIndex = index; // Sync the index for the lightbox
 
-                // Toggle active class representation
+                // Toggle active class visually
                 thumbnails.forEach(t => t.classList.remove('active-thumb'));
                 this.classList.add('active-thumb');
             });
         });
+
+        // --- 2. LIGHTBOX OPEN/CLOSE LOGIC ---
+        // Open lightbox when clicking the main image
+        mainImage.addEventListener('click', () => {
+            if(lightboxOverlay && lightboxImg) {
+                lightboxImg.src = mainImage.src;
+                lightboxOverlay.classList.add('active'); 
+            }
+        });
+
+        // Close lightbox when clicking the 'X'
+        if(closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                lightboxOverlay.classList.remove('active');
+            });
+        }
+
+        // Close lightbox when clicking the blurred background
+        if(lightboxOverlay) {
+            lightboxOverlay.addEventListener('click', (e) => {
+                if (e.target === lightboxOverlay) {
+                    lightboxOverlay.classList.remove('active');
+                }
+            });
+        }
+
+        // --- 3. LIGHTBOX NAVIGATION (PREV/NEXT) ---
+        if(prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : thumbnails.length - 1;
+                lightboxImg.src = thumbnails[currentIndex].src;
+                
+                // Keep the main page image synced in the background
+                mainImage.src = thumbnails[currentIndex].src;
+                thumbnails.forEach(t => t.classList.remove('active-thumb'));
+                thumbnails[currentIndex].classList.add('active-thumb');
+            });
+        }
+
+        if(nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex < thumbnails.length - 1) ? currentIndex + 1 : 0;
+                lightboxImg.src = thumbnails[currentIndex].src;
+                
+                // Keep the main page image synced in the background
+                mainImage.src = thumbnails[currentIndex].src;
+                thumbnails.forEach(t => t.classList.remove('active-thumb'));
+                thumbnails[currentIndex].classList.add('active-thumb');
+            });
+        }
     }
 });
