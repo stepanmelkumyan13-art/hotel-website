@@ -114,8 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Luxury Room Page Interactive Gallery & Lightbox Logic
     const mainImage = document.getElementById('main-room-image');
-    const thumbnails = document.querySelectorAll('.gallery-thumbnails .thumb');
-    
+   const thumbnails = document.querySelectorAll('.thumbnails .thumb');
     // Lightbox elements 
     const lightboxOverlay = document.querySelector('.lightbox'); 
     const lightboxImg = document.querySelector('.lightbox-img');
